@@ -22,7 +22,7 @@ $(document).ready(function() {
 
   // declare a firebase helper variable ✓
 
-  //Create event handler for clicking submit button
+  //Create event handler for clicking submit button ✓
   //have callback capture input into an object and send it to firebase ✓
   // Inputs needed from user and pushed to firebase ✓
   // Train Name ✓
@@ -41,19 +41,14 @@ $(document).ready(function() {
       .val()
       .trim();
 
-    let frequency = moment(
-      $('#frequency-input')
-        .val()
-        .trim(),
-      'mm'
-    ).format('X');
+    let frequency = $('#frequency-input')
+      .val()
+      .trim();
 
-    let arrivalTime = moment(
-      $('#arrival-input')
-        .val()
-        .trim(),
-      'HH:mm'
-    ).format('X'); //Parse the moment and make it's layout like the given string, then format it to Unix seconds
+    let arrivalTime = $('#arrival-input')
+      .val()
+      .trim();
+    //Parse the moment and make it's layout like the given string, then format it to Unix seconds
 
     console.log(
       'Frequency capture:',
@@ -84,6 +79,7 @@ $(document).ready(function() {
   // Calculations needed:
   // Minutes away = (Next Arrival - Now)
   // Next arrival = Previous Arrival(first arrival sometimes) + frequency === moment(PreviousArrival).add(frequency, "minutes")
+  // check his exercise: (01-Class-Content\07-firebase\01-Activities\21-TrainPredictions\train-example.html)
 
   //ACTUALLY
   // minutesAway = nextArrival - now === nextArrival - moment()
@@ -92,47 +88,57 @@ $(document).ready(function() {
     let theTrain = snap.val();
     let train = snap.val().train;
     let dest = snap.val().destination;
-    let freq = snap.val().frequency;
+    let freq = parseInt(snap.val().frequency);
     let arrival = snap.val().arrivalTime;
-    let nextArrival = parseInt(arrival) + parseInt(freq);
-    let minutesAway = nextArrival - parseInt(moment());
-    let currentTime = moment().format("X");
-    console.log("Current Time:", currentTime)
-    let minutesAway2 = moment(nextArrival)
-      .subtract(moment(), 'm')
-    console.log(
-      'Second MinutesAway:',
-      minutesAway2,
-      'Type of NextArrival:',
-      typeof minutesAway2
-    );
-    console.log(
-      'Next Arrival:',
-      nextArrival,
-      'Type of NextArrival:',
-      typeof nextArrival
-    );
-    console.log(
-      'minutesAway:',
-      nextArrival,
-      'Type of minutesAway:',
-      typeof nextArrival
-    );
+    // let nextArrival = parseInt(arrival) + parseInt(freq);
+    // let minutesAway = nextArrival - parseInt(moment());
+    console.log('TRAIN:', train);
+    console.log('Arrival:', arrival);
 
-    let tester = $('<td>').text(
-      moment(minutesAway2, 'X').format('mm')
-      );
+    //Arrival Time Pushed back a year to avoid negative number calculations
+    let arrivalConverted = moment(arrival, 'HH:mm').subtract(1, 'years');
+    console.log('ArrivalConvert:', arrivalConverted);
 
-      console.log("typeof:", typeof tester, "value:", tester)
+    // Current Time
+    let timeNow = moment();
+    console.log('Current Time:', moment(timeNow).format('hh:mm'));
+    // let minutesAway2 = moment(nextArrival).subtract(moment(), 'm');
+
+    // Time Elapsed between right now and First Arrival
+    let diffTime = moment().diff(moment(arrivalConverted), 'minutes');
+    console.log('Difference Between Now and First Arrival:', diffTime);
+
+    console.log('Frequency', freq, 'Type:', typeof freq);
+
+    // Time Apart (remainder)
+    let tRemainder = diffTime % freq;
+    console.log('tRemainder:', tRemainder);
+
+    // Minutes Until Next Arrival
+
+    let minutesTillTrain = freq - tRemainder;
+    console.log("Minutes 'Till Train:", minutesTillTrain)
+
+    let nextTrainArrival = moment().add(minutesTillTrain, "minutes")
+    let nextTrainArrivalConverted = moment(nextTrainArrival).format("HH:mm A")
+    console.log("Next Train Arrival:", moment(nextTrainArrival).format("HH:mm A"))
+
+    // Minutes Remaining
+    let firstTrainTime;
+
+    // let tester = $('<td>').text(moment(minutesAway2, 'X').format('mm'));
+
+    // console.log('typeof:', typeof tester, 'value:', tester);
 
     let newRow = $('<tr>');
     newRow.append(
       $('<td>').text(train),
       $('<td>').text(dest),
-      $('<td>').text(moment(freq, 'X').format('mm')),
-      $('<td>').text(moment(arrival, 'X').format('HH:mm A')),
-      tester
-      // $('<td>').text(moment(minutesAway2.toString(), 'X').format('mm'))
+      $('<td>').text(freq),
+      $('<td>').text(nextTrainArrivalConverted),
+      $('<td>').text(minutesTillTrain)
+      
+
     );
 
     $('#td-generate').append(newRow);
