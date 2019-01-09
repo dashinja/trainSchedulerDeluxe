@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+    <!--Bootstrap CSS-->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+      integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+      crossorigin="anonymous"
+    />
+    <!--jQuery-->
+    <script
+      src="http://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous"
+    ></script>
+
+    <!--Bootstrap JS-->
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+      integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+      crossorigin="anonymous"
+    ></script>
+
+    <!--Firebase-->
+    <script src="https://www.gstatic.com/firebasejs/5.7.2/firebase.js"></script>
+
+    <!--Moment.JS-->
+    <script src="http://momentjs.com/downloads/moment.js"></script>
+
+    <style>
+      th,
+      td {
+        display: inline-block;
+        width: 16.575%;
+      }
+    </style>
+    <title>Train Scheduler</title>
+  </head>
+  <body>
+    <!--Jumbotron-->
+    <div class="jumbotron w-75 mx-auto text-center rounded">
+      <h1 class="display-4">Train Scheduler Deluxe</h1>
+      <div class="lead"><em> All You Need To Plan in One Place </em></div>
+      <p class="hello-world" id="hello"></p>
+    </div>
+    <!--Table-->
+    <div class="card w-75 mx-auto">
+      <div class="card-header">
+        <div class="card-body">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th scope="col">Train Name</th>
+                <th scope="col">Destination</th>
+                <th scope="col">Frequency (min)</th>
+                <th scope="col">Next Arrival</th>
+                <th scope="col">Minutes Away</th>
+              </tr>
+            </thead>
+            <tbody id="td-generate"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!--Input Form-->
+    <form class="w-75 mx-auto">
+      <!--Train-->
+      <div class="form-group">
+        <label for="train-input">Train Name</label>
+        <input type="text" class="form-control" id="train-input" />
+      </div>
+      <!--Destination-->
+      <div class="form-group">
+        <label for="destination-input">Destination</label>
+        <input type="text" class="form-control" id="destination-input" />
+      </div>
+      <!--Frequency-->
+      <div class="form-group">
+        <label for="frequency-input">Frequency (min)</label>
+        <input type="number" class="form-control" id="frequency-input" />
+      </div>
+      <!--Next Arrival-->
+      <div class="form-group">
+        <label for="arrival-input">Next Arrival</label>
+        <input
+          type="number"
+          class="form-control"
+          id="arrival-input"
+          placeholder="HH:mm"
+        />
+      </div>
+      <button
+        class="add-train-btn btn-primary btn"
+        type="submit"
+        id="submit-button"
+      >
+        Submit
+      </button>
+    </form>
+
+    <script src="./train.js"></script>
+  </body>
+</html>
