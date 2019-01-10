@@ -95,51 +95,76 @@ $(document).ready(function() {
     console.log('TRAIN:', train);
     console.log('Arrival:', arrival);
 
-    //Arrival Time Pushed back a year to avoid negative number calculations
-    let arrivalConverted = moment(arrival, 'HH:mm').subtract(1, 'years');
-    console.log('ArrivalConvert:', arrivalConverted);
+    function renderCalc() {
+      //Arrival Time Pushed back a year to avoid negative number calculations
+      let arrivalConverted = moment(arrival, 'HH:mm').subtract(1, 'years');
+      console.log('ArrivalConvert:', arrivalConverted);
 
-    // Current Time
-    let timeNow = moment();
-    console.log('Current Time:', moment(timeNow).format('hh:mm'));
-    // let minutesAway2 = moment(nextArrival).subtract(moment(), 'm');
+      // Current Time
+      let timeNow = moment();
+      console.log('Current Time:', moment(timeNow).format('hh:mm'));
+      // let minutesAway2 = moment(nextArrival).subtract(moment(), 'm');
 
-    // Time Elapsed between right now and First Arrival
-    let diffTime = moment().diff(moment(arrivalConverted), 'minutes');
-    console.log('Difference Between Now and First Arrival:', diffTime);
+      // Time Elapsed between right now and First Arrival
+      let diffTime = moment().diff(moment(arrivalConverted), 'minutes');
+      console.log('Difference Between Now and First Arrival:', diffTime);
 
-    console.log('Frequency', freq, 'Type:', typeof freq);
+      console.log('Frequency', freq, 'Type:', typeof freq);
 
-    // Time Apart (remainder)
-    let tRemainder = diffTime % freq;
-    console.log('tRemainder:', tRemainder);
+      // Time Apart (remainder)
+      let tRemainder = diffTime % freq;
+      console.log('tRemainder:', tRemainder);
 
-    // Minutes Until Next Arrival
+      // Minutes Until Next Arrival
 
-    let minutesTillTrain = freq - tRemainder;
-    console.log("Minutes 'Till Train:", minutesTillTrain)
+      let minutesTillTrain = freq - tRemainder;
+      console.log("Minutes 'Till Train:", minutesTillTrain);
 
-    let nextTrainArrival = moment().add(minutesTillTrain, "minutes")
-    let nextTrainArrivalConverted = moment(nextTrainArrival).format("HH:mm A")
-    console.log("Next Train Arrival:", moment(nextTrainArrival).format("HH:mm A"))
+      let nextTrainArrival = moment().add(minutesTillTrain, 'minutes');
+      let nextTrainArrivalConverted = moment(nextTrainArrival).format(
+        'HH:mm A'
+      );
+      console.log(
+        'Next Train Arrival:',
+        moment(nextTrainArrival).format('HH:mm A')
+      );
+      
+      let answers = {
+        nextArrival: nextTrainArrivalConverted,
+        minutesAway: minutesTillTrain
+      }
+      return answers 
+    }
 
-    // Minutes Remaining
-    let firstTrainTime;
-
-    // let tester = $('<td>').text(moment(minutesAway2, 'X').format('mm'));
-
-    // console.log('typeof:', typeof tester, 'value:', tester);
+    // let counter = 0
+    // let timerRender = setInterval(() => {
+    //   console.log("New Calculation Complete")
+    //   console.log((counter++))
+    //   // renderCalc(
+    //   console.log(renderCalc())
+    //   console.log(renderCalc().nextArrival)
+    //   console.log(renderCalc().minutesAway)
+    //   $("#calc-arrival").text(renderCalc().nextArrival)
+    //   $("#calc-away").text(renderCalc().minutesAway)
+    // }, 1000 * 5);
 
     let newRow = $('<tr>');
-    newRow.append(
-      $('<td>').text(train),
-      $('<td>').text(dest),
-      $('<td>').text(freq),
-      $('<td>').text(nextTrainArrivalConverted),
-      $('<td>').text(minutesTillTrain)
-      
 
-    );
+    function renderData() {
+      newRow.append(
+        $('<td>').text(train),
+        $('<td>').text(dest),
+        $('<td>').text(freq),
+        $("<td>").attr("id", "calc-arrival").text(renderCalc().nextArrival),
+        $("<td>").attr("id", "calc-away").text(renderCalc().minutesAway)
+        // $('<td>').text(nextTrainArrivalConverted),
+        // $('<td>').text(minutesTillTrain)
+      );
+    }
+
+    renderData();
+
+    setInterval(() => {}, 1000 * 60);
 
     $('#td-generate').append(newRow);
   });
