@@ -1,4 +1,4 @@
-# trainSchedulerDeluxe
+# Train Scheduler Deluxe
 
 You are the administrator of all the things: that means every train is at your command.
 Choose the name, destination, how often the trains on your line arrive, and the first arrival to set your fleet in motion.
