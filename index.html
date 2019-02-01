@@ -44,92 +44,96 @@
     </style>
     <title>Train Scheduler</title>
   </head>
-  <body>
-    <!--Jumbotron-->
-    <div class="jumbotron w-50 mx-auto text-center rounded">
-      <h1 class="display-4">Train Scheduler Deluxe</h1>
-      <div class="lead"><em> All You Need To Plan in One Place </em></div>
-      <p class="hello-world" id="hello"></p>
-    </div>
-    <!--Table-->
-    <div class="card w-50 mx-auto">
-      <div class="card-header">
-        <div class="card-body">
-          <table class="table table-hover">
-            <thead>
-              <tr>
-                <th scope="col">Train Name</th>
-                <th scope="col">Destination</th>
-                <th scope="col">Frequency (min)</th>
-                <th scope="col">Next Arrival</th>
-                <th scope="col">Minutes Away</th>
-              </tr>
-            </thead>
-            <tbody id="td-generate"></tbody>
-          </table>
+  <body class="body-size">
+    <main class="super-container">
+
+      <!--Jumbotron-->
+      <div class="jumbotron w-50 mx-auto text-center rounded">
+        <h1 class="display-4">Train Scheduler Deluxe</h1>
+        <div class="lead"><em> All You Need To Plan in One Place </em></div>
+        <p class="hello-world" id="hello"></p>
+      </div>
+      <!--Table-->
+      <div class="card w-50 mx-auto">
+        <div class="card-header">
+          <div class="card-body">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th scope="col">Train Name</th>
+                  <th scope="col">Destination</th>
+                  <th scope="col">Frequency (min)</th>
+                  <th scope="col">Next Arrival</th>
+                  <th scope="col">Minutes Away</th>
+                </tr>
+              </thead>
+              <tbody id="td-generate"></tbody>
+            </table>
+          </div>
         </div>
       </div>
-    </div>
-    <!--Input Form-->
-    <form class="w-50 mx-auto form toggle-disabled">
-      <!--Train-->
-      <div class="form-group">
-        <label for="train-input">Train Name</label>
-        <input
-          type="text"
-          class="form-control"
-          id="train-input"
-          data-validation="required"
-          data-validation-length="5-100"
-          data-validation-help="Between 5 and 100 characters"
+      <!--Input Form-->
+      <form class="w-50 mx-auto form toggle-disabled">
+        <!--Train-->
+        <div class="form-group">
+          <label for="train-input">Train Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="train-input"
+            data-validation="required"
+            data-validation-length="5-100"
+            data-validation-help="Between 5 and 100 characters"
 
-        />
-      </div>
-      <!--Destination-->
-      <div class="form-group">
-        <label for="destination-input">Destination</label>
-        <input
-          type="text"
-          class="form-control"
-          id="destination-input"
-          data-validation="required"
-          data-validation-length="5-100"
-          data-validation-help="Between 5 and 100 characters"
-        />
-      </div>
-      <!--Frequency-->
-      <div class="form-group">
-        <label for="frequency-input">Frequency (min)</label>
-        <input
-          type="number"
-          class="form-control"
-          id="frequency-input"
-          data-validation="number"
-          data-validation-allowing="range[4;999]"
-          data-validation-help="Minimum time is 5 minutes"
-        />
-      </div>
-      <!--Next Arrival-->
-      <div class="form-group">
-        <label for="arrival-input">First Arrival</label>
-        <input
-          type="number"
-          class="form-control"
-          id="arrival-input"
-          data-validation="custom"
-          data-validation-regexp="[0-2]{1}[0-9]{1}[0-6]{1}[0-9]{1}"
-          data-validation-help="Earliest time is 0001 - latest time is 2400"
-          placeholder="HHmm"
-        />
-      </div>
-      <button
-        class="add-train-btn btn-primary btn"
-        type="submit"
-        id="submit-button"
-      >
-        Submit
-      </button>
-    </form>
+          />
+        </div>
+        <!--Destination-->
+        <div class="form-group">
+          <label for="destination-input">Destination</label>
+          <input
+            type="text"
+            class="form-control"
+            id="destination-input"
+            data-validation="required"
+            data-validation-length="5-100"
+            data-validation-help="Between 5 and 100 characters"
+          />
+        </div>
+        <!--Frequency-->
+        <div class="form-group">
+          <label for="frequency-input">Frequency (min)</label>
+          <input
+            type="number"
+            class="form-control"
+            id="frequency-input"
+            data-validation="number"
+            data-validation-allowing="range[4;999]"
+            data-validation-help="Minimum time is 5 minutes"
+          />
+        </div>
+        <!--Next Arrival-->
+        <div class="form-group">
+          <label for="arrival-input">First Arrival</label>
+          <input
+            type="number"
+            class="form-control"
+            id="arrival-input"
+            data-validation="custom"
+            data-validation-regexp="[0-2]{1}[0-9]{1}[0-6]{1}[0-9]{1}"
+            data-validation-help="Earliest time is 0001 - latest time is 2400"
+            placeholder="HHmm"
+          />
+        </div>
+        <button
+          class="add-train-btn btn-primary btn"
+          type="submit"
+          id="submit-button"
+        >
+          Submit
+        </button>
+      </form>
+    </main>
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
     <!-- <script>
       $.validate({
