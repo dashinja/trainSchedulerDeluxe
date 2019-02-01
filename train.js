@@ -30,6 +30,14 @@ $(document).ready(function() {
   // First Train Time (HH:mm - military time)
   // Frequency (min) ✓
 
+  
+$.validate({
+  modules : 'toggleDisabled, sanitize',
+  disabledFormFilter : 'form.toggle-disabled',
+  showErrorDialogs : true
+});
+
+
   $('#submit-button').on('click', function(event) {
     event.preventDefault();
 
@@ -44,7 +52,13 @@ $(document).ready(function() {
     let frequency = $('#frequency-input')
       .val()
       .trim();
+    // let frequency = numeral($("#frequency-input")).format('000')
+    //   .val()
+    //   .trim();
 
+    // let arrivalTime =numeral($("#arrival-input")).format('0000')
+    //   .val()
+    //   .trim();
     let arrivalTime = $('#arrival-input')
       .val()
       .trim();

@@ -6,8 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
     <!--Bootstrap CSS-->
-    
-    <link rel="stylesheet" href="https://bootswatch.com/4/slate/bootstrap.min.css">
+
+    <link
+      rel="stylesheet"
+      href="https://bootswatch.com/4/slate/bootstrap.min.css"
+    />
 
     <!--jQuery-->
     <script
@@ -30,7 +33,6 @@
     <script src="https://momentjs.com/downloads/moment.js"></script>
 
     <style>
-
       /* body {
         background-image: url("https://stonekeeping.co.uk/wp-content/uploads/2017/10/dev-stonetechflooring.server5.obrienmedia.co.uk-background-1493899-1920.jpg")
       }
@@ -39,8 +41,6 @@
         display: inline-block;
         width: 16.575%;
       } */
-
-
     </style>
     <title>Train Scheduler</title>
   </head>
@@ -71,29 +71,54 @@
       </div>
     </div>
     <!--Input Form-->
-    <form class="w-50 mx-auto">
+    <form class="w-50 mx-auto form toggle-disabled">
       <!--Train-->
       <div class="form-group">
         <label for="train-input">Train Name</label>
-        <input type="text" class="form-control" id="train-input" />
+        <input
+          type="text"
+          class="form-control"
+          id="train-input"
+          data-validation="required"
+          data-validation-length="5-100"
+          data-validation-help="Between 5 and 100 characters"
+
+        />
       </div>
       <!--Destination-->
       <div class="form-group">
         <label for="destination-input">Destination</label>
-        <input type="text" class="form-control" id="destination-input" />
+        <input
+          type="text"
+          class="form-control"
+          id="destination-input"
+          data-validation="required"
+          data-validation-length="5-100"
+          data-validation-help="Between 5 and 100 characters"
+        />
       </div>
       <!--Frequency-->
       <div class="form-group">
         <label for="frequency-input">Frequency (min)</label>
-        <input type="number" class="form-control" id="frequency-input" />
+        <input
+          type="number"
+          class="form-control"
+          id="frequency-input"
+          data-validation="number"
+          data-validation-allowing="range[4;999]"
+          data-validation-help="Minimum time is 5 minutes"
+        />
       </div>
       <!--Next Arrival-->
       <div class="form-group">
         <label for="arrival-input">First Arrival</label>
         <input
-          type="text"
+          type="number"
           class="form-control"
           id="arrival-input"
+          data-validation="custom"
+          data-validation-regexp="[0-2]{1}[0-9]{1}[0-6]{1}[0-9]{1}"
+          data-validation-help="Earliest time is 0001 - latest time is 2400"
           placeholder="HHmm"
         />
       </div>
@@ -105,7 +130,12 @@
         Submit
       </button>
     </form>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
+    <!-- <script>
+      $.validate({
+        modules: 'sanitize'
+      })
+    </script> -->
     <script src="./train.js"></script>
   </body>
 </html>
