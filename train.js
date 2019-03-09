@@ -12,24 +12,6 @@ $(document).ready(function() {
 
   let db = firebase.database()
 
-  //Create appopriate HTML ✓
-  //Load proper framworks: Bootstrap, jQuery, Moment.js, firebase ✓
-
-  //JS File Starter ✓
-  //Document.ready to enclose all ✓
-  //JS File - load proper firebase config ✓
-  // jQuery Hello World Test: ✓
-
-  // declare a firebase helper variable ✓
-
-  //Create event handler for clicking submit button ✓
-  //have callback capture input into an object and send it to firebase ✓
-  // Inputs needed from user and pushed to firebase ✓
-  // Train Name ✓
-  // Destination ✓
-  // First Train Time (HH:mm - military time)
-  // Frequency (min) ✓
-
   $.validate({
     modules: 'toggleDisabled, sanitize',
     disabledFormFilter: 'form.toggle-disabled',
@@ -53,24 +35,11 @@ $(document).ready(function() {
     let frequency = $('#frequency-input')
       .val()
       .trim()
-    // let frequency = numeral($("#frequency-input")).format('000')
-    //   .val()
-    //   .trim();
 
-    // let arrivalTime =numeral($("#arrival-input")).format('0000')
-    //   .val()
-    //   .trim();
     let arrivalTime = $('#arrival-input')
       .val()
       .trim()
-    //Parse the moment and make it's layout like the given string, then format it to Unix seconds
 
-    console.log(
-      'Frequency capture:',
-      frequency,
-      'is it a string?:',
-      typeof frequency
-    )
 
     let newTrain = {
       train,
@@ -86,19 +55,7 @@ $(document).ready(function() {
     $('#destination-input').val('')
     $('#frequency-input').val('')
     $('#arrival-input').val('')
-    console.log('Successful FireBase Push:', newTrain)
   })
-
-  //Create event handler for when child_added to firebase
-  // receive snapshot of data and set value to variable
-  // parse object for individual variables and set to display to DOM
-  // Calculations needed:
-  // Minutes away = (Next Arrival - Now)
-  // Next arrival = Previous Arrival(first arrival sometimes) + frequency === moment(PreviousArrival).add(frequency, "minutes")
-  // check his exercise: (01-Class-Content\07-firebase\01-Activities\21-TrainPredictions\train-example.html)
-
-  //ACTUALLY
-  // minutesAway = nextArrival - now === nextArrival - moment()
 
   db.ref('/').on('child_added', function(snap) {
     let theTrain = snap.val()
@@ -107,42 +64,27 @@ $(document).ready(function() {
     let freq = parseInt(snap.val().frequency)
     let arrival = snap.val().arrivalTime
     let theCount = snap.val().realCounter
-    // let nextArrival = parseInt(arrival) + parseInt(freq);
-    // let minutesAway = nextArrival - parseInt(moment());
-    console.log('TRAIN:', train)
-    console.log('Arrival:', arrival)
 
     function renderCalc() {
       //Arrival Time Pushed back a year to avoid negative number calculations
       let arrivalConverted = moment(arrival, 'HH:mm').subtract(1, 'years')
-      console.log('ArrivalConvert:', arrivalConverted)
 
       // Current Time
       let timeNow = moment()
-      console.log('Current Time:', moment(timeNow).format('hh:mm'))
-      // let minutesAway2 = moment(nextArrival).subtract(moment(), 'm');
 
       // Time Elapsed between right now and First Arrival
       let diffTime = moment().diff(moment(arrivalConverted), 'minutes')
-      console.log('Difference Between Now and First Arrival:', diffTime)
 
-      console.log('Frequency', freq, 'Type:', typeof freq)
 
       // Time Apart (remainder)
       let tRemainder = diffTime % freq
-      console.log('tRemainder:', tRemainder)
 
       // Minutes Until Next Arrival
 
       let minutesTillTrain = freq - tRemainder
-      console.log("Minutes 'Till Train:", minutesTillTrain)
 
       let nextTrainArrival = moment().add(minutesTillTrain, 'minutes')
       let nextTrainArrivalConverted = moment(nextTrainArrival).format('HH:mm A')
-      console.log(
-        'Next Train Arrival:',
-        moment(nextTrainArrival).format('HH:mm A')
-      )
 
       let answers = {
         nextArrival: nextTrainArrivalConverted,
@@ -150,18 +92,6 @@ $(document).ready(function() {
       }
       return answers
     }
-
-    // let counter = 0
-    // let timerRender = setInterval(() => {
-    //   console.log("New Calculation Complete")
-    //   console.log((counter++))
-    //   // renderCalc(
-    //   console.log(renderCalc())
-    //   console.log(renderCalc().nextArrival)
-    //   console.log(renderCalc().minutesAway)
-    //   $("#calc-arrival").text(renderCalc().nextArrival)
-    //   $("#calc-away").text(renderCalc().minutesAway)
-    // }, 1000 * 5);
 
     let newRow = $('<tr>')
     function renderData() {
@@ -179,37 +109,9 @@ $(document).ready(function() {
           .attr('class', 'recalc-away')
           .attr('data-away', theCount)
           .text(renderCalc().minutesAway)
-        // .text(reRenderMinutesAway(60000))
-        // $('<td>').text(nextTrainArrivalConverted),
-        // $('<td>').text(minutesTillTrain)
       )
     }
-
-
-    // function reRender(time) {
-    //   setInterval(() => {
-    //     let selection2 = $('.recalc-arrival')
-    //     // for (let i = 0)
-    //     $('.recalc-arrival').text(renderCalc().nextArrival)
-    //     $('.recalc-away').text(renderCalc().minutesAway)
-    //   }, time)
-    // }
-
-    // $('.super-container').on('click', '.recalc-arrival', function() {
-    //   // alert('Yes!!')
-    //   let selections = $(this).attr('data-arrival')
-    //   let selections2 = $(this)
-    //   console.log("I'm data-arrival with THIS: ", selections)
-    //   console.log("I'm SELECTIONS2 with THIS: ", selections2)
-
-      
-
-    //   // $('.recalc-arrival').text(renderCalc().nextArrival)
-    //   console.log('I worked! I got clicked!')
-    // })
-
     renderData()
-    // reRender(60000)
 
     $('#td-generate').append(newRow)
   })
