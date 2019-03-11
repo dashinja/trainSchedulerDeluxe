@@ -58,7 +58,6 @@ $(document).ready(function() {
   })
 
   db.ref('/').on('child_added', function(snap) {
-    let theTrain = snap.val()
     let train = snap.val().train
     let dest = snap.val().destination
     let freq = parseInt(snap.val().frequency)
@@ -68,9 +67,6 @@ $(document).ready(function() {
     function renderCalc() {
       //Arrival Time Pushed back a year to avoid negative number calculations
       let arrivalConverted = moment(arrival, 'HH:mm').subtract(1, 'years')
-
-      // Current Time
-      let timeNow = moment()
 
       // Time Elapsed between right now and First Arrival
       let diffTime = moment().diff(moment(arrivalConverted), 'minutes')
